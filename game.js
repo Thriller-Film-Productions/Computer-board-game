@@ -2,8 +2,8 @@ const w = 9;
 const h = 31;
 const gameState = [];
 const moveButtons = [];
-const bluePos = [(w-1)/2, 0];
-const redPos = [(w-1)/2, h-1];
+const bluePos = [(w - 1) / 2, 0];
+const redPos = [(w - 1) / 2, h - 1];
 const selected = [];
 let thueMorse = [0];
 let turn = 0;
@@ -28,14 +28,20 @@ function setup() {
   for (let i = 0; i < 3; i++) {
     let temp = [];
     for (let j = 0; j < 3; j++) {
-      let t = $(`<button onclick='move(${i-1}, ${j-1})'>`).css({width:"1vw", height:"1vw"});
+      let t = $(`<button onclick='move(${i-1}, ${j-1})'>`).css({
+        width: "1vw",
+        height: "1vw"
+      });
       buttonContainer.append(t);
       temp.push(t);
     }
     buttonContainer.append("<br>");
     moveButtons.push(temp);
   }
-  buttonContainer.css({bheight:"8vw", width:"7vw"})
+  buttonContainer.css({
+    bheight: "8vw",
+    width: "7vw"
+  })
   console.log(gameState);
   draw();
 }
@@ -43,7 +49,11 @@ function setup() {
 function draw() {
   console.log(getThue(turn), thueMorse)
   $("#game").empty();
-  $("#moveButtons").css({position:"fixed", left:"35vw", top:"40vh"});
+  $("#moveButtons").css({
+    position: "fixed",
+    left: "35vw",
+    top: "40vh"
+  });
   let c;
   if (turnType == "move 1") {
     c = "#004b74";
@@ -56,7 +66,9 @@ function draw() {
   }
   gameState[bluePos[0]][bluePos[1]] = 1;
   gameState[redPos[0]][redPos[1]] = 2;
-  $("#moveButtons").css({backgroundColor:c});
+  $("#moveButtons").css({
+    backgroundColor: c
+  });
   for (let i = 0; i < w; i++) {
     for (let j = 0; j < h; j++) {
       let temp = $(`<img src='Icon Nothing.svg' onclick="select(${i}, ${j})">`);
@@ -78,31 +90,45 @@ function draw() {
         $("#game").append(thingy);
         thingy.width(32);
         thingy.height(32);
-        thingy.css({position:"absolute", left:`${i*32}px`, top:`${j*32}px`})
+        thingy.css({
+          position: "absolute",
+          left: `${i*32}px`,
+          top: `${j*32}px`
+        })
       }
-      $("#game").css({height: `${h*32}px`});
+      $("#game").css({
+        height: `${h*32}px`
+      });
       temp.width(32);
       temp.height(32);
-      temp.css({position:"absolute", left:`${i*32}px`, top:`${j*32}px`})
+      temp.css({
+        position: "absolute",
+        left: `${i*32}px`,
+        top: `${j*32}px`
+      })
     }
   }
-  if (bluePos[1] == h-1) {
+  if (bluePos[1] == h - 1) {
     let win = $("<h1>Blue wins!</h1>");
-    win.css({fontFamily:"Ubuntu, sans-serif"})
+    win.css({
+      fontFamily: "Ubuntu, sans-serif"
+    })
     $("body").empty().append(win);
   } else if (redPos[1] == 0) {
     let win = $("<h1>Red wins!</h1>");
-    win.css({fontFamily:"Ubuntu, sans-serif"})
+    win.css({
+      fontFamily: "Ubuntu, sans-serif"
+    })
     $("body").empty().append(win);
   }
 }
 
 function move(y, x) {
   if (turnType == "move 1" || turnType == "move 2") {
-    if (turnType == "move 2" && redPos[0]+x >= 0) {
-      if (gameState[redPos[0]+x][redPos[1]+y] == 0) {
-        redPos[0]+=x;
-        redPos[1]+=y;
+    if (turnType == "move 2" && redPos[0] + x >= 0) {
+      if (gameState[redPos[0] + x][redPos[1] + y] == 0 && (JSON.stringify(gameState[redPos[0]][redPos[1] + y]).match(/^(0|2)$/) || JSON.stringify(gameState[redPos[0] + x][redPos[1]]).match(/^(0|2)$/))) {
+        redPos[0] += x;
+        redPos[1] += y;
         for (let i = 0; i < w; i++) {
           for (let j = 0; j < h; j++) {
             if (gameState[i][j] == 2) {
@@ -114,9 +140,9 @@ function move(y, x) {
         }
       }
     } else {
-      if (gameState[bluePos[0]+x][bluePos[1]+y] == 0) {
-        bluePos[0]+=x;
-        bluePos[1]+=y;
+      if (gameState[bluePos[0] + x][bluePos[1] + y] == 0 && JSON.stringify(gameState[bluePos[0]][bluePos[1] + y]).match(/^(0|1)$/) && JSON.stringify(gameState[bluePos[0] + x][bluePos[1]]).match(/^(0|1)$/)) {
+        bluePos[0] += x;
+        bluePos[1] += y;
         for (let i = 0; i < w; i++) {
           for (let j = 0; j < h; j++) {
             if (gameState[i][j] == 1) {
