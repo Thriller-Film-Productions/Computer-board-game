@@ -126,7 +126,7 @@ function draw() {
 function move(y, x) {
   if (turnType == "move 1" || turnType == "move 2") {
     if (turnType == "move 2" && redPos[0] + x >= 0) {
-      if (gameState[redPos[0] + x][redPos[1] + y] == 0 && (JSON.stringify(gameState[redPos[0]][redPos[1] + y]).match(/^(0|2)$/) || JSON.stringify(gameState[redPos[0] + x][redPos[1]]).match(/^(0|2)$/))) {
+      if (gameState[redPos[0] + x][redPos[1] + y] == 0 && (JSON.stringify(gameState[redPos[0]][redPos[1] + y]).match(/^(0|2)$/) && JSON.stringify(gameState[redPos[0] + x][redPos[1]]).match(/^(0|2)$/))) {
         redPos[0] += x;
         redPos[1] += y;
         for (let i = 0; i < w; i++) {
