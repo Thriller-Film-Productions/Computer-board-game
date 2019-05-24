@@ -58,11 +58,11 @@ function draw() {
   if (turnType == "move 1") {
     c = "#004b74";
   } else if (turnType == "edit 1") {
-    c = "#385c70"
+    c = "#203540"
   } else if (turnType == "move 2") {
     c = "#6a1d00"
   } else {
-    c = "#704333"
+    c = "#42281f"
   }
   gameState[bluePos[0]][bluePos[1]] = 1;
   gameState[redPos[0]][redPos[1]] = 2;
